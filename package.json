@@ -1,0 +1,39 @@
+{
+  "name": "casbin_demo",
+  "version": "1.0.0",
+  "description": "Authorization App",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "cross-env NODE_ENV=development node ./bin/www",
+    "dev": "cross-env NODE_ENV=development nodemon ./bin/www",
+    "serve": "cross-env NODE_ENV=production node ./bin/www"
+  },
+  "keywords": [
+    "nodejs",
+    "mongodb",
+    "casbin"
+  ],
+  "author": "gireeshcse",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.19.2",
+    "bcrypt": "^4.0.1",
+    "casbin": "^4.1.1",
+    "cookie": "^0.4.0",
+    "cookie-parser": "^1.4.5",
+    "cross-env": "^7.0.2",
+    "csurf": "^1.11.0",
+    "debug": "^4.1.1",
+    "ejs": "^3.0.2",
+    "express": "^4.17.1",
+    "http-errors": "^1.7.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^5.9.6",
+    "morgan": "^1.10.0",
+    "node-env-file": "^0.1.8"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.2"
+  }
+}

@@ -1,0 +1,19 @@
+p, ram, inventory, edit
+p, laxman, inventory, view
+p, shiva, admin, edit
+
+g, inventory, inventory_items
+g, inventory, inventory_photos
+
+
+Request: ram, inventory_items, view
+Casbin response: true
+
+Request: laxman, inventory_items, edit
+Casbin response: false
+
+Request: bob, inventory_photos, view
+Casbin response: true
+
+Request: shiva, inventory, edit
+Casbin response: true

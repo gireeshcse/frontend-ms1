@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <%- include('../partials/header') %>
+  </head>
+  <body>
+    <%- include('../partials/nav.ejs') %>
+    <div class="container" style="text-align: center;">
+      <h4 style="vertical-align: middle;">Registeration Page</h4>
+      <div class="row">
+        <div class="col-md-4 offset-md-4">
+          <% if(typeof error !== 'undefined') { %>
+            <div class="alert alert-danger" role="alert">
+              <%= error %>
+            </div>
+          <% } %>
+          <form action="/register", method="POST">
+            <div class="form-group">
+              <label for="exampleInputEmail1">Firstname</label>
+              <input type="text" name="firstname" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter firstname">
+              <small id="emailHelp" class="form-text text-muted">Firstname.</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Lastname</label>
+              <input type="text" name="lastname" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter lastname">
+              <small id="emailHelp" class="form-text text-muted">Lastname.</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputEmail1">Email address</label>
+              <input type="email" name="email" required class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+              <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+            </div>
+            <div class="form-group">
+              <label for="exampleInputPassword1">Password</label>
+              <input type="password" name="password" required class="form-control" id="exampleInputPassword1" placeholder="Password">
+            </div>
+            <input hidden style="display: none;"  name="_csrf" value="<%= token %>" />
+            <button type="submit" class="btn btn-primary">Register</button>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <%- include('../partials/footer.ejs') %>
+    </div>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+  </body>
+</html>
