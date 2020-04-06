@@ -4,6 +4,8 @@ var User = require('../models/user');
 var cookie = require('cookie');
 var enforcer = require('../auth/enforcer');
 
+const axios = require('axios');
+
 router.use(function(req,res,next){
     if(req.cookies.name !== undefined)
     {
@@ -32,8 +34,14 @@ router.get('/',async function(req,res,next){
     console.log(access);
     if(access)
     {
-        var user = await User.findOne({email:req.auth.data.email});
-        res.render('user/profile',{title: 'Profile Page',user:user,auth_data:req.auth.data});
+        axios.get(process.env.API_ENDPOINT+'/user?email='+req.auth.data.email)
+        .then(function(response){
+            console.log(response.data);
+            res.render('user/profile',{title: 'Profile Page',user:response.data,auth_data:req.auth.data});
+        })
+        .catch(function(error){
+            res.render('pages/error',{title: 'Error Page',message:'No record Found',error:{status:'API Error',stack:error}});
+        });
     }else{
         res.render('user/denied',{title: 'Access Denied Page',auth_data:req.auth.data});
     }
@@ -45,8 +53,13 @@ router.get('/users',async function(req,res,next){
     console.log(access);
     if(access)
     {
-        var users = await User.find({});
-        res.render('user/users',{title: 'Users Page',users:users,auth_data:req.auth.data});
+        axios.get(process.env.API_ENDPOINT+'/users')
+        .then(function(response){
+            res.render('user/users',{title: 'Users Page',users:response.data,auth_data:req.auth.data});
+        })
+        .catch(function(error){
+            res.render('pages/error',{title: 'Error Page',message:'API Call',error:{status:'API Error',stack:error}});
+        });
     }else{
         res.render('user/denied',{title: 'Access Denied Page',auth_data:req.auth.data});
     }
@@ -55,21 +68,24 @@ router.get('/users',async function(req,res,next){
 // View Profile
 router.get('/edit',async function(req,res,next){
 
-    var user = await User.findOne({email:req.auth.data.email});
-    if(user)
-    {
-        var obj = {resource:'profile',owner:user.email};
+
+    axios.get(process.env.API_ENDPOINT+'/user?email='+req.auth.data.email)
+    .then(async function(response){
+        console.log(response.data);
+        var obj = {resource:'profile',owner:response.data.email};
         var access = await enforcer.editProfile(req.auth.data.email,obj,'edit');
         console.log(access);
         if(access)
         {
-            res.render('user/edit',{title: 'Edit Profile Page',user:user,auth_data:req.auth.data});
+            res.render('user/edit',{title: 'Edit Profile Page',user:response.data,auth_data:req.auth.data});
         }else{
             res.render('user/denied',{title: 'Access Denied Page',auth_data:req.auth.data});
         }
-    }
+    })
+    .catch(function(error){
+        res.render('pages/error',{title: 'Error Page',message:'No record Found',error:{status:'API Error',stack:error}});
+    });
 
-    
 });
 
 module.exports = router;
